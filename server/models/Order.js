@@ -1,14 +1,16 @@
+
+// module.exports = mongoose.model("Order", OrderSchema);
 const mongoose = require("mongoose");
 
 const OrderSchema = new mongoose.Schema({
-  userId: String,
-  cartId: String,
+  userId: { type: String, required: true },
+  cartId: { type: String, required: true },
   cartItems: [
     {
       productId: String,
       title: String,
       image: String,
-      price: String,
+      price: Number,
       quantity: Number,
     },
   ],
@@ -20,14 +22,14 @@ const OrderSchema = new mongoose.Schema({
     phone: String,
     notes: String,
   },
-  orderStatus: String,
-  paymentMethod: String,
-  paymentStatus: String,
-  totalAmount: Number,
-  orderDate: Date,
-  orderUpdateDate: Date,
-  paymentId: String,
-  payerId: String,
+  orderStatus: { type: String, default: "pending" },
+  paymentMethod: { type: String, required: true }, // e.g., "paypal" or "cod"
+  paymentStatus: { type: String, default: "pending" },
+  totalAmount: { type: Number, required: true },
+  orderDate: { type: Date, default: Date.now },
+  orderUpdateDate: { type: Date, default: Date.now },
+  paymentId: { type: String, default: "" },
+  payerId: { type: String, default: "" },
 });
 
 module.exports = mongoose.model("Order", OrderSchema);
